@@ -169,7 +169,7 @@
             success: function (data) {
                 $('#customer').modal('hide');
                 $('#customerForm').trigger("reset");
-                table.draw();
+                table.draw(false);
             },
             error: function (data) {
                 console.log('Error:', data);

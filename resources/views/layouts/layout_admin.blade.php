@@ -18,8 +18,17 @@
     <!-- Custom CSS -->
     <link href="{{ asset('xtreme/dist/css/style.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
 
+    <style>
+        .blackground-detail {
+            background-color: #eef5f9;
+        }
 
+        #product-table tbody tr {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
     <!-- ============================================================== -->
@@ -103,19 +112,15 @@
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                                     <div class=""><img src="{{ asset('xtreme/assets/images/users/1.jpg')}}" alt="user" class="img-circle" width="60"></div>
                                     <div class="m-l-10">
-                                        <h4 class="m-b-0">Steave Jobs</h4>
-                                        <p class=" m-b-0">varun@gmail.com</p>
+                                        <h4 class="m-b-0">{{Auth::user()->name}}</h4>
+                                        <p class=" m-b-0">{{Auth::user()->email}}</p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" role="button" data-toggle="modal" data-target=".bs-example-modal-lg" class="model_img img-fluid"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                                <a class="dropdown-item" href="{{route('signout')}}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+            
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -131,6 +136,64 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myLargeModalLabel">Thông tin người dùng</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger print-error-msg" style="display:none">
+                                    <ul></ul>
+                                </div>
+                                <div class="card card-body">
+                                    <form class="form-horizontal" id="userForm">
+                                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                                        <div class="form-group">
+                                            <label for="product_code">Họ và tên <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Mã sản phẩm" id="name" name="name" value="{{Auth::user()->name}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product_name">Tên tài khoản <span class="text-danger">*</span></label>
+                                            <input type="text" id="product_name" class="form-control" placeholder="Name" name ="account" value="{{Auth::user()->account}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Vài trò<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Giá bán" id="role" name = "role" value="admin">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Điện thoại</label>
+                                                    <input type="text" class="form-control" placeholder="Số lượng" id="phone" name = "phone" value="{{Auth::user()->phone}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input type="email" class="form-control" placeholder="Số lượng" id="email" name = "email" value="{{Auth::user()->email}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" id="saveUserForm" class="btn btn-success waves-effect text-left">Save</button>
+                                            <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
@@ -460,8 +523,41 @@
     <!-- This Page JS -->
     <script src="{{asset('xtreme/assets/libs/cropper/dist/cropper.min.js')}}"></script>
     <script src="{{asset('xtreme/dist/js/pages/forms/img-cropper/cropper.init.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js
+  "></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js
+   "></script>
+    <script src="
+    https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js
+    "></script>
+    <script src="
+    https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js
+    "></script>
+    <script src="
+    https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
     
     <script>
+        $('#userForm').submit(function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            $.ajax({
+                data: formData,
+                url: "{{ route('users.store') }}",
+                type: "POST",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    dd(1);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    printErrorMsg(data.responseJSON.errors)
+                }
+            });
+        });
         function printErrorMsg (msg) {
             $(".print-error-msg").find("ul").html('');
             $(".print-error-msg").css('display','block');
@@ -469,6 +565,25 @@
                 $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
             });
         }
+
+        function openDetail(myself) {
+            var tr = myself.closest('tr');
+            var row = table.row( tr );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+                myself.find('.details-control').html('<i class="fas fa-angle-right"></i>')
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                myself.find('.details-control').html('<i class="fas fa-angle-down"></i>')
+                tr.addClass('shown');
+            }
+        };
+
     </script>
     @stack('scripts')
 </body>

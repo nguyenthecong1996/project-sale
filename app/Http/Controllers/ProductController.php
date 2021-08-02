@@ -14,25 +14,13 @@ class ProductController extends Controller
             $data = Product::get();
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){
-
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"><i class="fas fa-edit"></i> Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"><i class="fas fa-trash"></i> Delete</a>';
-    
-                            return $btn;
-                    })
-                    ->addColumn('image', function ($row) { 
-                        $url= $row['image'];
-                        return '<img src="'.$url.'" border="0" width="60" class="img-rounded" align="center" />';
-                    })
                     ->addColumn('quantity', function ($row) { 
-                        return  $row['quantity'].' '. config('common.product_unit.1');
+                        return  $row['quantity'].' '. config('common.product_unit.'.$row['unit']);
                     })
                     ->addColumn('status', function($row){
                         return $data = $row['status'] == config('common.customer_status.active') ? 'Active': 'Block';
                     })
-                    ->rawColumns(['action', 'status', 'image', 'quantity'])
+                    ->rawColumns(['status', 'quantity'])
                     ->make(true);
         }
         return view('admin.product.index');
