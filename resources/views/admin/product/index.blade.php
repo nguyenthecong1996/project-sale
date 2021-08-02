@@ -230,7 +230,7 @@
             contentType: false,
             processData: false,
             success: function (data) {
-                $('#customer').modal('hide');
+                $('#product').modal('hide');
                 $('#productForm').trigger("reset");
                 table.draw();
             },
@@ -238,7 +238,7 @@
                 console.log('Error:', data);
 
                 printErrorMsg(data.responseJSON.errors)
-                $('#customer').modal('show');
+                $('#product').modal('show');
             }
         });
     });
