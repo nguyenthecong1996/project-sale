@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="mb-3 d-flex justify-content-end">
-                    <a class="btn btn-info" href="#" id="createProduct" role="button" data-toggle="modal" data-target=".bs-example-modal-lg" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
+                    <a class="btn btn-info" href="#" id="createProduct" role="button" data-toggle="modal" data-target="#product" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table product-overview" id="product-table">
@@ -46,7 +46,7 @@
     <!-- Column -->
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" id="product" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

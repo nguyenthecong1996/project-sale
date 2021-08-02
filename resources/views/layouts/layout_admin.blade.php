@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" role="button" data-toggle="modal" data-target=".bs-example-modal-lg" class="model_img img-fluid"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" role="button" data-toggle="modal" data-target="#user_edit" class="model_img img-fluid"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{route('signout')}}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
             
@@ -136,7 +136,7 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="user_edit" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

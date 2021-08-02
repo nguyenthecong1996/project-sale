@@ -20,7 +20,7 @@
             <div class="card-body">
                 
                 <div class="mb-3 d-flex justify-content-end">
-                    <a class="btn btn-info" href="#" id="createCustomer" role="button" data-toggle="modal" data-target=".bs-example-modal-lg" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
+                    <a class="btn btn-info" href="#" id="createCustomer" role="button" data-toggle="modal" data-target="#customer" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
                 </div>
                 <div class="table-responsive">
                     <table id="zero_config" class="table table-striped table-bordered">
