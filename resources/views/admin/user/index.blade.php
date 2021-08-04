@@ -211,7 +211,7 @@
     $('#createProduct').click(function () {
         $('#saveBtn').html("Save");
         $("#is_store").val('create')
-        $('#product_id').val('');
+        $('#staff_id').val('');
         $("#staff_code").prop('disabled', false);
         $('#staffForm').trigger("reset");
         $(".print-error-msg").find("ul").html('');
