@@ -17,11 +17,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
         'account',
-        'phone'
+        'phone',
+        'image'
+    ];
+
+    protected $appends = [
+        'code_user',
+        'role_status'
     ];
 
     /**
@@ -42,4 +49,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(){
+        return $this->hasOne(Role::class);
+    }
+
+    public function getImageAttribute($value) {
+        $path = 'storage/user/' . $value;
+        return $value ? asset($path) : 'https://www.riobeauty.co.uk/images/product_image_not_found.gif';
+    }
+
+    public function getCodeUserAttribute($value) {
+        return $this->roles->user_code;
+    }
+
+    public function getRoleStatusAttribute($value) {
+        return $this->roles->status;
+    }
+    
 }

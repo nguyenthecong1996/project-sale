@@ -140,7 +140,7 @@
             url: "customers/"+customer_id+"/edit",
             method: 'GET',
             success: function(result) {
-                $('.bs-example-modal-lg').modal('show');
+                $('#customer').modal('show');
                 $('#customer_id').val(result.id);
                 $('#example-code').val(result.customer_code);
                 $('#example-name').val(result.name);

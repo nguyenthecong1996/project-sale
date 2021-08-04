@@ -22,18 +22,20 @@ class CustomAuthController extends Controller
 
     public function customLogin(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'password' => 'required',
+        $validator = $request->validate([
+            'account' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
         ]);
 
-        $credentials = $request->only('name', 'password');
-        if (Auth::attempt($credentials)) {
+        $fieldType = filter_var($request->account, FILTER_VALIDATE_EMAIL) ? 'email' : 'account';
+
+        if (Auth::attempt(array($fieldType => $request->account, 'password' => $request->password))) {
             return redirect()->intended('customers')
                         ->withSuccess('Signed in');
         }
-  
-        return redirect("login")->withSuccess('Login details are not valid');
+
+        return redirect()->route('login')
+        ->with('error','Email-Address And Password Are Wrong.');
     }
 
     public function registration()
@@ -47,17 +49,17 @@ class CustomAuthController extends Controller
 
     public function customRegistration(Request $request)
     {  
+        $data = $request->all();
         // dd(1);
         $request->validate([
             'name' => 'required',
+            'account' => 'required|string|max:255|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
         ]);
-           
-        $data = $request->all();
         $check = $this->create($data);
          
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        return redirect()->intended('customers')->withSuccess('Signed in');
     }
 
     public function create(array $data)
@@ -65,6 +67,7 @@ class CustomAuthController extends Controller
       return User::create([
         'name' => $data['name'],
         'email' => $data['email'],
+        'account' => $data['account'],
         'password' => Hash::make($data['password'])
       ]);
     }

@@ -23,8 +23,7 @@ Route::post('registration', [CustomAuthController::class, 'customRegistration'])
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout'); 
 
 Route::group(['middleware' => 'checkUser'], function () {
-    Route::post('users', [UserController::class, 'store'])->name('users.store');
-
+    
     Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::post('customers/store', [CustomerController::class, 'store'])->name('customers.store');
@@ -34,4 +33,10 @@ Route::group(['middleware' => 'checkUser'], function () {
     Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
     Route::delete('products/{id}/delete', [ProductController::class, 'destroy'])->name('products.delete');
+    
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
+    Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+
 });
