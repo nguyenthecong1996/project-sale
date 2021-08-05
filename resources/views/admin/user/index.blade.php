@@ -19,9 +19,11 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="mb-3 d-flex justify-content-end">
-                    <a class="btn btn-info" href="#" id="createProduct" role="button" data-toggle="modal" data-target="#staff" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
-                </div>
+                @if(Auth::user()->role_status == 9)
+                    <div class="mb-3 d-flex justify-content-end">
+                        <a class="btn btn-info" href="#" id="createProduct" role="button" data-toggle="modal" data-target="#staff" class="model_img img-fluid"><i class="fas fa-plus-circle"></i> Create New</a>
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table user-overview" id="users-table">
                         <thead>
@@ -242,13 +244,13 @@
         });
     });
 
-    $('body').on('click', '.deleteProduct', function (){
-        var product_id = $(this).data("id");
+    $('body').on('click', '.deleteStaff', function (){
+        var staff_id = $(this).data("id");
         var result = confirm("Are You sure want to delete !");
         if(result){
             $.ajax({
                 type: "DELETE",
-                url: "products/"+product_id+"/delete",
+                url: "users/"+staff_id+"/delete",
                 success: function (data) {
                     table.draw();
                 },
@@ -274,10 +276,14 @@
                             <div class="card-body blackground-detail">
                                 <h3 class="card-title row">
                                     <div class="col-lg-6">${d['name']}</div>
-                                    <div class="col-lg-6 d-flex justify-content-end">
-                                        <a href="javascript:void(0)" data-id="${d['id']}" class="text-inverse p-r-10 editStaff" data-toggle="tooltip" title="" data-original-title="Edit"><i class="ti-marker-alt"></i> </a>
-                                        <a href="javascript:void(0)" data-id="${d['id']}" class="text-inverse deleteStaff" title="" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash"></i></a>
-                                    </div>
+                                        <div class="col-lg-6 d-flex justify-content-end">
+                                            ${d['auth_role'] == 9 || d['id'] ==  d['auth_id']? 
+                                                `<a href="javascript:void(0)" data-id="${d['id']}" class="text-inverse p-r-10 editStaff" data-toggle="tooltip" title="" data-original-title="Edit"><i class="ti-marker-alt"></i> </a>`
+                                            : ''}
+                                            ${d['auth_role'] == 9 &&  d['id'] != d['auth_id']? 
+                                                `<a href="javascript:void(0)" data-id="${d['id']}" class="text-inverse deleteStaff" title="" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash"></i></a>`
+                                            : ''}
+                                        </div>
                                 </h3>
                                 <h6 class="card-subtitle">globe type chair for rest</h6>
                                 <div class="row">

@@ -578,6 +578,7 @@
             }
             else {
                 // Open this row
+                console.log(row.data())
                 row.child( format(row.data()) ).show();
                 myself.find('.details-control').html('<i class="fas fa-angle-down"></i>')
                 tr.addClass('shown');

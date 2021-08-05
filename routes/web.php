@@ -37,6 +37,6 @@ Route::group(['middleware' => 'checkUser'], function () {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-
+    Route::delete('users/{id}/delete', [UserController::class, 'destroy'])->name('users.delete');
 
 });
